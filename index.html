@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Маркетплейс на Лазурці</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icon.min.css" />
+  </main>
+  <script src="main.js"></script>
+</head>
+<body>
+
+
+  <!-- Шапка сайта -->
+  <header class="site-header">
+  <div class="header-container">
+
+    <div class="logo">
+      <a href="index.html">AzurMarket</a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="about.html">О нас</a>
+      <a href="#contact">Контакти</a>
+      <a href="#faq">Товари</a>
+      <a href="#services">Послуги</a>
+      <!-- Кнопка Підтримати как ссылка с кнопочным стилем -->
+      <button id="supportBtn" class="btn btn-support" style="display: flex; align-items: center;">
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       width="20" height="20" 
+       viewBox="0 0 24 24" 
+       fill="currentColor" 
+       aria-hidden="true" 
+       style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+             2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09 
+             C13.09 3.81 14.76 3 16.5 3 
+             19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+  Підтримати
+</button>
+
+    <div class="header-controls">
+      <div class="lang-dropdown">
+        <div class="theme-switch-wrapper">
+          <span class="theme-icon sun">☀️</span>
+          <label class="theme-switch">
+            <input type="checkbox" id="themeToggle" />
+            <span class="slider"></span>
+          </label>
+          <span class="theme-icon moon">🌙</span>
+        </div>
+
+        <!-- Кнопка переключения языка -->
+<button id="langToggle">🌐 Мова ▼</button>
+
+<!-- Модальное окно выбора языка -->
+<div id="langModal" class="lang-modal hidden">
+  <div class="lang-modal-content">
+    <h3 class="lang-modal-header">Оберіть мову</h3>
+    <ul class="lang-list">
+      <li><span class="flag-icon flag-icon-ua"></span> Українська</li>
+    <li><span class="flag-icon flag-icon-ru"></span> Русский</li>
+    <li><span class="flag-icon flag-icon-uk"></span> English</li>
+    <li><span class="flag-icon flag-icon-fr"></span> Français</li>
+    <li><span class="flag-icon flag-icon-de"></span> Deutsch</li>
+      <!-- Добавь больше языков, если надо -->
+    </ul>
+    <button id="closeLangModal" class="close-btn">Закрити</button>
+  </div>
+</div>
+
+      <div class="auth-buttons">
+        <button id="loginBtn" class="btn">Войти</button>
+        <button id="registerBtn" class="btn btn-primary">Регистрация</button>
+      </div>
+    </div>
+
+  </div>
+</header>
+<!-- top-bar-wrapper (шапка + панель управления + кнопка фильтра) -->
+  <section class="top-bar" data-theme="dark">
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Пошук товару..." class="search-input" />
+      <select id="sortSelect" class="filter-select">
+        <option value="" selected>Без сортування</option> <!-- значение по умолчанию -->
+        <option value="newest">Нові</option>
+        <option value="price-asc">Ціна: від низької до високої</option>
+        <option value="price-desc">Ціна: від високої до низької</option>
+        <option value="popular">Популярні</option>
+      </select>
+
+      <!-- Фильтр: теперь тоже внутри .controls -->
+      <div class="filter-wrapper" style="position: relative;">
+        <button class="filter-button" aria-expanded="false" aria-controls="filterPanel">Фільтр</button>
+
+        <div class="filter-panel" id="filterPanel" role="region" aria-hidden="true" tabindex="-1">
+          <fieldset>
+            <legend>Категории товаров</legend>
+            <label><input type="checkbox" name="category" value="одяг"> Одяг</label>
+            <label><input type="checkbox" name="category" value="техніка"> Техніка</label>
+            <label><input type="checkbox" name="category" value="меблі"> Меблі</label>
+            <label><input type="checkbox" name="category" value="побутова-хімія"> Побутова хімія та гігієна</label>
+            <label><input type="checkbox" name="category" value="дитячі-товари"> Дитячі товари</label>
+            <label><input type="checkbox" name="category" value="продукти"> Продукти харчування</label>
+            <label><input type="checkbox" name="category" value="спортивні-товари"> Спортивні товари</label>
+            <label><input type="checkbox" name="category" value="інше"> Інше</label>
+          </fieldset>
+
+          <!-- Подкатегории -->
+
+          <!-- Одяг -->
+          <fieldset class="subcategory-group" data-parent="одяг" style="display:none;">
+            <legend>Підкатегорії (Одяг)</legend>
+            <label><input type="checkbox" name="subcategory" value="спортивний-футболки"> Спортивний — футболки</label>
+            <label><input type="checkbox" name="subcategory" value="спортивний-штани"> Спортивний — штани</label>
+            <label><input type="checkbox" name="subcategory" value="спортивний-взуття"> Спортивний — взуття</label>
+            <label><input type="checkbox" name="subcategory" value="повсякденний-футболки"> Повсякденний — футболки</label>
+            <label><input type="checkbox" name="subcategory" value="повсякденний-штани"> Повсякденний — штани</label>
+            <label><input type="checkbox" name="subcategory" value="повсякденний-взуття"> Повсякденний — взуття</label>
+          </fieldset>
+
+          <!-- Техніка -->
+          <fieldset class="subcategory-group" data-parent="техніка" style="display:none;">
+            <legend>Підкатегорії (Техніка)</legend>
+            <label><input type="checkbox" name="subcategory" value="смартфони-android"> Смартфони — Android</label>
+            <label><input type="checkbox" name="subcategory" value="смартфони-iphone"> Смартфони — iPhone</label>
+            <label><input type="checkbox" name="subcategory" value="ноутбуки-навчальні"> Ноутбуки — навчальні</label>
+            <label><input type="checkbox" name="subcategory" value="ноутбуки-ігрові"> Ноутбуки — ігрові</label>
+            <label><input type="checkbox" name="subcategory" value="ноутбуки-ультрабуки"> Ноутбуки — ультрабуки</label>
+            <label><input type="checkbox" name="subcategory" value="ноутбуки-макбуки"> Ноутбуки — макбуки</label>
+            <label><input type="checkbox" name="subcategory" value="аксесуари-наушники"> Аксесуари — навушники</label>
+            <label><input type="checkbox" name="subcategory" value="аксесуари-зарядки"> Аксесуари — зарядки</label>
+            <label><input type="checkbox" name="subcategory" value="аксесуари-чохли"> Аксесуари — чохли</label>
+          </fieldset>
+
+          <!-- Меблі -->
+          <fieldset class="subcategory-group" data-parent="меблі" style="display:none;">
+            <legend>Підкатегорії (Меблі)</legend>
+            <label><input type="checkbox" name="subcategory" value="столи"> Столи</label>
+            <label><input type="checkbox" name="subcategory" value="стільці-офісні"> Стільці — офісні</label>
+            <label><input type="checkbox" name="subcategory" value="стільці-кухонні"> Стільці — кухонні</label>
+            <label><input type="checkbox" name="subcategory" value="шафи"> Шафи</label>
+          </fieldset>
+
+          <!-- Побутова хімія -->
+          <fieldset class="subcategory-group" data-parent="побутова-хімія" style="display:none;">
+            <legend>Підкатегорії (Побутова хімія та гігієна)</legend>
+            <label><input type="checkbox" name="subcategory" value="прання"> Засоби для прання</label>
+            <label><input type="checkbox" name="subcategory" value="миття"> Засоби для миття</label>
+            <label><input type="checkbox" name="subcategory" value="прибирання"> Засоби для прибирання</label>
+            <label><input type="checkbox" name="subcategory" value="гігієна"> Особиста гігієна</label>
+          </fieldset>
+
+          <!-- Дитячі товари -->
+          <fieldset class="subcategory-group" data-parent="дитячі-товари" style="display:none;">
+            <legend>Підкатегорії (Дитячі товари)</legend>
+            <label><input type="checkbox" name="subcategory" value="одяг-дитячий"> Одяг</label>
+            <label><input type="checkbox" name="subcategory" value="іграшки"> Іграшки</label>
+            <label><input type="checkbox" name="subcategory" value="візочки"> Візочки</label>
+            <label><input type="checkbox" name="subcategory" value="автокрісла"> Автокрісла</label>
+          </fieldset>
+
+          <!-- Продукти харчування -->
+          <fieldset class="subcategory-group" data-parent="продукти" style="display:none;">
+            <legend>Підкатегорії (Продукти харчування)</legend>
+            <label><input type="checkbox" name="subcategory" value="бакалія"> Бакалія</label>
+            <label><input type="checkbox" name="subcategory" value="консерви"> Консерви</label>
+            <label><input type="checkbox" name="subcategory" value="солодощі"> Солодощі</label>
+            <label><input type="checkbox" name="subcategory" value="напої"> Напої</label>
+          </fieldset>
+
+          <!-- Спортивні товари -->
+          <fieldset class="subcategory-group" data-parent="спортивні-товари" style="display:none;">
+            <legend>Підкатегорії (Спортивні товари)</legend>
+            <label><input type="checkbox" name="subcategory" value="фітнес"> Фітнес</label>
+            <label><input type="checkbox" name="subcategory" value="тренажери"> Тренажери</label>
+            <label><input type="checkbox" name="subcategory" value="екіпірування"> Екіпірування</label>
+          </fieldset>
+
+          <!-- Інше -->
+          <fieldset class="subcategory-group" data-parent="інше" style="display:none;">
+            <legend>Підкатегорії (Інше)</legend>
+            <label><input type="checkbox" name="subcategory" value="автотовари"> Автотовари</label>
+            <label><input type="checkbox" name="subcategory" value="зоотовари"> Зоотовари</label>
+            <label><input type="checkbox" name="subcategory" value="книги"> Книги</label>
+            <label><input type="checkbox" name="subcategory" value="інструменти"> Інструменти</label>
+          </fieldset>
+
+          <!-- Вот блоки с городом, ценой и состоянием -->
+          <fieldset>
+            <legend>Місто</legend>
+            <select name="city">
+              <option value="">Усі міста</option>
+              <option value="ніцца">Ніцца</option>
+              <option value="канни">Канни</option>
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Ціна</legend>
+            <label>Від: <input type="number" name="price_min" min="0" placeholder="0"></label>
+            <label>До: <input type="number" name="price_max" min="0" placeholder="1000"></label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Стан</legend>
+            <label><input type="radio" name="condition" value="new"> Нове</label>
+            <label><input type="radio" name="condition" value="used"> Б/у</label>
+            <label><input type="radio" name="condition" value="" checked> Всі</label>
+          </fieldset>
+
+          <!-- Кнопки -->
+          <div class="filter-buttons">
+            <button class="apply-filter" type="button">Застосувати</button>
+            <button class="reset-filter" type="button">Скинути</button>
+          </div>
+
+        </div> <!-- конец filter-panel -->
+
+      </div> <!-- конец filter-wrapper -->
+
+    </div> <!-- конец controls -->
+
+  </section> <!-- конец top-bar -->
+
+</div> <!-- конец top-bar-wrapper -->
+->
+
+
+
+  <!-- 2. Hero Block -->
+<section class="hero">
+  <h2>Зручний обмін речами у Франції</h2>
+  <p>Знаходьте, продавайте або даруйте речі в кілька кліків</p>
+  <button id="addAdBtn" class="primary-btn">
+  <i class="fa-solid fa-circle-plus"></i> Додати оголошення
+</button>
+</section>
+
+
+<!-- 2-Б. Категорії товарів з горизонтальним скролом -->
+<section class="product-categories">
+  <h3>Популярні категорії</h3>
+  <div class="category-scroll-wrapper">
+    <div class="category-grid popular-categories">
+      <a href="#" class="category-button" style="background-image: url('images/electronics.jpg');"><span>Електроніка</span></a>
+      <a href="#" class="category-button" style="background-image: url('images/clothes.jpg');"><span>Одяг</span></a>
+      <a href="#" class="category-button" style="background-image: url('images/home.jpg');"><span>Для дому</span></a>
+      <a href="#" class="category-button" style="background-image: url('images/sport.jpg');"><span>Спорт</span></a>
+      <a href="#" class="category-button" style="background-image: url('images/tools.jpg');"><span>Інструменти</span></a>
+      <a href="#" class="category-button" style="background-image: url('images/other.jpg');"><span>Інше</span></a>
+    </div>
+  </div>
+
+  <!-- Кнопка для показа еще категорий (можно через js скрывать/показывать) -->
+  <button id="showMoreBtn">Ще категорії</button>
+
+  <!-- Дополнительные категории, по умолчанию скрыты -->
+  <div id="moreCategories" class="category-grid extra-categories hidden">
+    <!-- Можно тут добавить более редкие категории -->
+    <a href="#" class="small-category" style="background-image: url('images/special1.jpg');"><span>Категорія 1</span></a>
+    <a href="#" class="small-category" style="background-image: url('images/special2.jpg');"><span>Категорія 2</span></a>
+  </div>
+</section>
+
+<!-- 3. Секция товаров - список будет вертикальный -->
+<section class="product-list">
+  <h3>Оголошення</h3>
+  <div class="products-container">
+    <!-- Здесь будут карточки товаров -->
+  </div>
+</section>
+
+
+  <!-- 4. Оголошення -->
+  <section class="ads">
+    <h3>Останні оголошення</h3>
+    <div class="ad-card">
+      <img src="https://via.placeholder.com/150" alt="Фото товару" />
+      <h4>Стілець IKEA</h4>
+      <p>Гарний стілець у гарному стані</p>
+      <span>📍 Ніцца • 🇺🇦 Українець</span>
+    </div>
+    <div class="ad-card">
+      <img src="https://via.placeholder.com/150" alt="Фото товару" />
+      <h4>Ноутбук Lenovo</h4>
+      <p>Повністю робочий, зарядка в комплекті</p>
+      <span>📍 Канни • 🇫🇷 Француз</span>
+    </div>
+    <div class="ad-card">
+      <img src="https://via.placeholder.com/150" alt="Фото товару" />
+      <h4>Дитячі іграшки</h4>
+      <p>Подарую безкоштовно</p>
+      <span>📍 Антіб • 🇺🇦 Українка</span>
+    </div>
+  </section>
+
+  <!-- 4-Б. Розділ "Послуги" -->
+<section class="services">
+  <h3>Послуги поблизу</h3>
+  <div class="service-card">
+    <img src="https://via.placeholder.com/150" alt="Фото послуги" />
+    <h4>Ремонт побутової техніки</h4>
+    <p>Майстер з Ніцци, працюю швидко та недорого</p>
+    <span>📍 Ніцца • 🇺🇦 Українець</span>
+  </div>
+  <div class="service-card">
+    <img src="https://via.placeholder.com/150" alt="Фото послуги" />
+    <h4>Репетитор французької</h4>
+    <p>Поясню просто, досвід викладання 3 роки</p>
+    <span>📍 Канни • 🇫🇷 Француз</span>
+  </div>
+  <div class="service-card">
+    <img src="https://via.placeholder.com/150" alt="Фото послуги" />
+    <h4>Прибирання квартир</h4>
+    <p>Надійно, акуратно, недорого. Є відгуки</p>
+    <span>📍 Ментон • 🇺🇦 Українка</span>
+  </div>
+</section>
+
+<section class="categories">
+  <h3>Категорії послуг</h3>
+  <div class="category-links">
+    <a href="#">Ремонт</a>
+    <a href="#">Навчання</a>
+    <a href="#">Краса</a>
+    <a href="#">Інше</a>
+  </div>
+</section>
+
+
+  <!-- 5. Кнопка додавання -->
+  <section class="add-button">
+    <button>➕ Додати нове оголошення</button>
+  </section>
+
+  <!-- 6. Як це працює -->
+  <section class="how-it-works">
+    <h3>Як це працює</h3>
+    <ol>
+      <li>🔍 Знайди потрібне оголошення</li>
+      <li>➕ Створи своє в один клік</li>
+      <li>📞 Звʼяжися з продавцем</li>
+    </ol>
+  </section>
+
+  <!-- 7. Відгуки -->
+  <section class="feedback">
+    <h3>Відгуки користувачів</h3>
+    <p>🚧 В розробці (в майбутньому — система перевірених користувачів)</p>
+  </section>
+
+  <!-- 8. Підтримати -->
+  <section class="support">
+    <h3>Підтримати проєкт</h3>
+    <p>Якщо платформа корисна — підтримайте нас донатом 🙏</p>
+    <button>❤️ Підтримати</button>
+  </section>
+
+  <!-- 9. FAQ -->
+  <section class="faq">
+    <h3>Питання та відповіді</h3>
+    <ul>
+      <li>❓ Як додати оголошення?</li>
+      <li>❓ Чи потрібно реєструватися?</li>
+      <li>❓ Де шукати допомогу?</li>
+    </ul>
+  </section>
+
+  <!-- 10. Footer -->
+  <footer>
+    <p>© 2025 AzurMarket. Всі права захищені.</p>
+    <p><a href="#">Політика конфіденційності</a> | <a href="#">Правила платформи</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
