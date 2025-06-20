@@ -86,6 +86,110 @@ categoryCheckboxes.forEach(cb => {
 updateSubcategories();
 
 
+// Пустой массив товаров — заполняется динамически
+const products = [];
+
+const productList = document.getElementById('productList');
+const addAdForm = document.getElementById('addAdForm');
+const addAdOverlay = document.getElementById('addAdOverlay');
+const searchInput = document.getElementById('searchInput');
+const addAdBtn = document.getElementById('addAdBtn');
+const closeAddAdBtn = document.getElementById('closeAddAd');
+
+// Рендер товаров
+function renderProducts(items) {
+  productList.innerHTML = '';
+
+  if (items.length === 0) {
+    productList.innerHTML = '<p>Товарів не знайдено</p>';
+    return;
+  }
+
+  items.forEach(item => {
+    const imgSrc = item.image || 'https://via.placeholder.com/300x200?text=Немає+фото';
+
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${imgSrc}" alt="Фото товару" class="product-image"
+           onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Немає+фото';" />
+      <div class="product-info">
+        <h4 class="product-title">${item.title}</h4>
+        <p class="product-description">${item.description}</p>
+        <p class="product-price">${item.price > 0 ? '€' + item.price : 'Безкоштовно 🎁'}</p>
+        <span class="product-location">📍 ${item.location} • 🇺🇦 ${item.nationality}</span>
+      </div>
+    `;
+
+    productList.appendChild(card);
+  });
+}
+
+renderProducts(products);
+
+// Обработка формы — только один submit
+addAdForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(addAdForm);
+  const file = formData.get('image');
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const newProduct = {
+      title: formData.get('title') || '(без назви)',
+      description: formData.get('description') || '',
+      price: Number(formData.get('price')) || 0,
+      location: formData.get('location') || '',
+      nationality: formData.get('nationality') || '',
+      image: file && file.name ? event.target.result : null
+    };
+
+    products.push(newProduct);
+    renderProducts(products);
+    addAdForm.reset();
+    addAdOverlay.classList.add('hidden');
+  };
+
+  if (file && file.name) {
+    reader.readAsDataURL(file);
+  } else {
+    reader.onload({ target: { result: null } }); // запуск без файла
+  }
+});
+
+// Поиск
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+
+  const filtered = products.filter(product =>
+    product.title.toLowerCase().includes(query) ||
+    product.description.toLowerCase().includes(query)
+  );
+
+  renderProducts(filtered);
+});
+
+// Открытие/закрытие формы
+addAdBtn.addEventListener('click', () => {
+  addAdOverlay.classList.remove('hidden');
+});
+
+closeAddAdBtn.addEventListener('click', () => {
+  addAdOverlay.classList.add('hidden');
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

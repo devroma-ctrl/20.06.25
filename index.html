@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icon.min.css" />
   </main>
-  <script src="main.js"></script>
 </head>
 <body>
 
@@ -25,7 +24,7 @@
       <a href="about.html">О нас</a>
       <a href="#contact">Контакти</a>
       <a href="#faq">Товари</a>
-      <a href="#services">Послуги</a>
+      <a href="services.html">Послуги</a>
       <!-- Кнопка Підтримати как ссылка с кнопочным стилем -->
       <button id="supportBtn" class="btn btn-support" style="display: flex; align-items: center;">
   <svg xmlns="http://www.w3.org/2000/svg" 
@@ -227,7 +226,6 @@
   </section> <!-- конец top-bar -->
 
 </div> <!-- конец top-bar-wrapper -->
-->
 
 
 
@@ -241,95 +239,87 @@
 </section>
 
 
-<!-- 2-Б. Категорії товарів з горизонтальним скролом -->
-<section class="product-categories">
-  <h3>Популярні категорії</h3>
-  <div class="category-scroll-wrapper">
-    <div class="category-grid popular-categories">
-      <a href="#" class="category-button" style="background-image: url('images/electronics.jpg');"><span>Електроніка</span></a>
-      <a href="#" class="category-button" style="background-image: url('images/clothes.jpg');"><span>Одяг</span></a>
-      <a href="#" class="category-button" style="background-image: url('images/home.jpg');"><span>Для дому</span></a>
-      <a href="#" class="category-button" style="background-image: url('images/sport.jpg');"><span>Спорт</span></a>
-      <a href="#" class="category-button" style="background-image: url('images/tools.jpg');"><span>Інструменти</span></a>
-      <a href="#" class="category-button" style="background-image: url('images/other.jpg');"><span>Інше</span></a>
+<!-- 2.5 Банери під кнопкою -->
+<section class="promo-banners">
+  <!-- Сначала рекламные баннеры -->
+  <div class="promo-row wide-row">
+    <div class="promo-banner promo">
+      <i class="fa-solid fa-bullhorn" style="margin-right: 8px;"></i> Реклама
+    </div>
+    <div class="promo-banner promo">
+      <i class="fa-solid fa-bullseye" style="margin-right: 8px;"></i> Рекламний блок
+    </div>
+    <div class="promo-banner promo">
+      <i class="fa-solid fa-handshake" style="margin-right: 8px;"></i> Акція / Партнер
     </div>
   </div>
 
-  <!-- Кнопка для показа еще категорий (можно через js скрывать/показывать) -->
-  <button id="showMoreBtn">Ще категорії</button>
-
-  <!-- Дополнительные категории, по умолчанию скрыты -->
-  <div id="moreCategories" class="category-grid extra-categories hidden">
-    <!-- Можно тут добавить более редкие категории -->
-    <a href="#" class="small-category" style="background-image: url('images/special1.jpg');"><span>Категорія 1</span></a>
-    <a href="#" class="small-category" style="background-image: url('images/special2.jpg');"><span>Категорія 2</span></a>
+  <!-- Затем фильтрационные баннеры -->
+  <div class="promo-row compact-row">
+    <a href="/marketplace.html?free=true" class="promo-banner free">
+      <i class="fa-solid fa-gift" style="margin-right: 8px;"></i> Безкоштовне
+    </a>
+    <a href="/marketplace.html?urgent=true" class="promo-banner urgent">
+      <i class="fa-solid fa-bolt" style="margin-right: 8px;"></i> Терміново
+    </a>
   </div>
 </section>
 
-<!-- 3. Секция товаров - список будет вертикальный -->
-<section class="product-list">
-  <h3>Оголошення</h3>
-  <div class="products-container">
-    <!-- Здесь будут карточки товаров -->
+ <!-- 4. Оголошення -->
+<section class="ads">
+  <h3>Останні оголошення</h3>
+  <div id="productList" class="product-grid">
+    <!-- Карточки товаров будут добавляться сюда через JS -->
   </div>
 </section>
 
 
-  <!-- 4. Оголошення -->
-  <section class="ads">
-    <h3>Останні оголошення</h3>
-    <div class="ad-card">
-      <img src="https://via.placeholder.com/150" alt="Фото товару" />
-      <h4>Стілець IKEA</h4>
-      <p>Гарний стілець у гарному стані</p>
-      <span>📍 Ніцца • 🇺🇦 Українець</span>
-    </div>
-    <div class="ad-card">
-      <img src="https://via.placeholder.com/150" alt="Фото товару" />
-      <h4>Ноутбук Lenovo</h4>
-      <p>Повністю робочий, зарядка в комплекті</p>
-      <span>📍 Канни • 🇫🇷 Француз</span>
-    </div>
-    <div class="ad-card">
-      <img src="https://via.placeholder.com/150" alt="Фото товару" />
-      <h4>Дитячі іграшки</h4>
-      <p>Подарую безкоштовно</p>
-      <span>📍 Антіб • 🇺🇦 Українка</span>
-    </div>
-  </section>
-
-  <!-- 4-Б. Розділ "Послуги" -->
-<section class="services">
-  <h3>Послуги поблизу</h3>
-  <div class="service-card">
-    <img src="https://via.placeholder.com/150" alt="Фото послуги" />
-    <h4>Ремонт побутової техніки</h4>
-    <p>Майстер з Ніцци, працюю швидко та недорого</p>
-    <span>📍 Ніцца • 🇺🇦 Українець</span>
+<!-- Оверлей для добавления оголошення -->
+<div id="addAdOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="overlay-content">
+    <button id="closeAddAd" class="close-btn" aria-label="Закрити форму">&times;</button>
+    <h2 id="modalTitle">Додати нове оголошення</h2>
+    <form id="addAdForm">
+      <label>
+        Назва товару:
+        <input type="text" name="title" required />
+      </label>
+      <label>
+        Опис:
+        <textarea name="description" required></textarea>
+      </label>
+      <label>
+        Ціна (€):
+        <input type="number" name="price" min="0" required />
+      </label>
+      <label>
+        Місто:
+        <select name="location" required>
+          <option value="Ніцца">Ніцца</option>
+          <option value="Канни">Канни</option>
+          <option value="Монако">Монако</option>
+          <!-- Добавь другие города при необходимости -->
+        </select>
+      </label>
+      <label>
+        Національність продавця:
+        <select name="nationality" required>
+          <option value="Українець">Українець</option>
+          <option value="Француз">Француз</option>
+          <option value="Поляк">Поляк</option>
+          <option value="Румун">Румун</option>
+          <option value="Українка">Українка</option>
+          <!-- Добавь другие варианты -->
+        </select>
+      </label>
+      <label>
+      Фото:
+      <input type="file" name="image" accept="image/*" />
+      </label>
+      <button type="submit" class="primary-btn">Додати оголошення</button>
+    </form>
   </div>
-  <div class="service-card">
-    <img src="https://via.placeholder.com/150" alt="Фото послуги" />
-    <h4>Репетитор французької</h4>
-    <p>Поясню просто, досвід викладання 3 роки</p>
-    <span>📍 Канни • 🇫🇷 Француз</span>
-  </div>
-  <div class="service-card">
-    <img src="https://via.placeholder.com/150" alt="Фото послуги" />
-    <h4>Прибирання квартир</h4>
-    <p>Надійно, акуратно, недорого. Є відгуки</p>
-    <span>📍 Ментон • 🇺🇦 Українка</span>
-  </div>
-</section>
-
-<section class="categories">
-  <h3>Категорії послуг</h3>
-  <div class="category-links">
-    <a href="#">Ремонт</a>
-    <a href="#">Навчання</a>
-    <a href="#">Краса</a>
-    <a href="#">Інше</a>
-  </div>
-</section>
+</div>
 
 
   <!-- 6. Відгуки -->
