@@ -105,118 +105,45 @@
             <label><input type="checkbox" name="category" value="дитячі-товари"> Дитячі товари</label>
             <label><input type="checkbox" name="category" value="продукти"> Продукти харчування</label>
             <label><input type="checkbox" name="category" value="спортивні-товари"> Спортивні товари</label>
+            <label><input type="checkbox" name="category" value="автотовари"> Автотовари</label>
             <label><input type="checkbox" name="category" value="інше"> Інше</label>
           </fieldset>
+          <!-- Місто -->
+<fieldset>
+  <legend>Місто</legend>
+  <select name="city" class="filter-select">
+    <option value="">Будь-яке місто</option>
+    <option value="ніцца">Ніцца</option>
+    <option value="канни">Канни</option>
+    <!-- Додай інші міста при потребі -->
+  </select>
+</fieldset>
 
-          <!-- Подкатегории -->
+<!-- Ціна -->
+<fieldset>
+  <legend>Ціна (€)</legend>
+  <input type="number" name="price_min" placeholder="від" style="width: 80px; margin-right: 10px;" />
+  <input type="number" name="price_max" placeholder="до" style="width: 80px;" />
+</fieldset>
 
-          <!-- Одяг -->
-          <fieldset class="subcategory-group" data-parent="одяг" style="display:none;">
-            <legend>Підкатегорії (Одяг)</legend>
-            <label><input type="checkbox" name="subcategory" value="спортивний-футболки"> Спортивний — футболки</label>
-            <label><input type="checkbox" name="subcategory" value="спортивний-штани"> Спортивний — штани</label>
-            <label><input type="checkbox" name="subcategory" value="спортивний-взуття"> Спортивний — взуття</label>
-            <label><input type="checkbox" name="subcategory" value="повсякденний-футболки"> Повсякденний — футболки</label>
-            <label><input type="checkbox" name="subcategory" value="повсякденний-штани"> Повсякденний — штани</label>
-            <label><input type="checkbox" name="subcategory" value="повсякденний-взуття"> Повсякденний — взуття</label>
-          </fieldset>
+<!-- Стан -->
+<fieldset>
+  <legend>Стан</legend>
+  <label><input type="radio" name="condition" value=""> Будь-який</label>
+  <label><input type="radio" name="condition" value="new"> Нове</label>
+  <label><input type="radio" name="condition" value="used"> Б/у</label>
+</fieldset>
 
-          <!-- Техніка -->
-          <fieldset class="subcategory-group" data-parent="техніка" style="display:none;">
-            <legend>Підкатегорії (Техніка)</legend>
-            <label><input type="checkbox" name="subcategory" value="смартфони-android"> Смартфони — Android</label>
-            <label><input type="checkbox" name="subcategory" value="смартфони-iphone"> Смартфони — iPhone</label>
-            <label><input type="checkbox" name="subcategory" value="ноутбуки-навчальні"> Ноутбуки — навчальні</label>
-            <label><input type="checkbox" name="subcategory" value="ноутбуки-ігрові"> Ноутбуки — ігрові</label>
-            <label><input type="checkbox" name="subcategory" value="ноутбуки-ультрабуки"> Ноутбуки — ультрабуки</label>
-            <label><input type="checkbox" name="subcategory" value="ноутбуки-макбуки"> Ноутбуки — макбуки</label>
-            <label><input type="checkbox" name="subcategory" value="аксесуари-наушники"> Аксесуари — навушники</label>
-            <label><input type="checkbox" name="subcategory" value="аксесуари-зарядки"> Аксесуари — зарядки</label>
-            <label><input type="checkbox" name="subcategory" value="аксесуари-чохли"> Аксесуари — чохли</label>
-          </fieldset>
-
-          <!-- Меблі -->
-          <fieldset class="subcategory-group" data-parent="меблі" style="display:none;">
-            <legend>Підкатегорії (Меблі)</legend>
-            <label><input type="checkbox" name="subcategory" value="столи"> Столи</label>
-            <label><input type="checkbox" name="subcategory" value="стільці-офісні"> Стільці — офісні</label>
-            <label><input type="checkbox" name="subcategory" value="стільці-кухонні"> Стільці — кухонні</label>
-            <label><input type="checkbox" name="subcategory" value="шафи"> Шафи</label>
-          </fieldset>
-
-          <!-- Побутова хімія -->
-          <fieldset class="subcategory-group" data-parent="побутова-хімія" style="display:none;">
-            <legend>Підкатегорії (Побутова хімія та гігієна)</legend>
-            <label><input type="checkbox" name="subcategory" value="прання"> Засоби для прання</label>
-            <label><input type="checkbox" name="subcategory" value="миття"> Засоби для миття</label>
-            <label><input type="checkbox" name="subcategory" value="прибирання"> Засоби для прибирання</label>
-            <label><input type="checkbox" name="subcategory" value="гігієна"> Особиста гігієна</label>
-          </fieldset>
-
-          <!-- Дитячі товари -->
-          <fieldset class="subcategory-group" data-parent="дитячі-товари" style="display:none;">
-            <legend>Підкатегорії (Дитячі товари)</legend>
-            <label><input type="checkbox" name="subcategory" value="одяг-дитячий"> Одяг</label>
-            <label><input type="checkbox" name="subcategory" value="іграшки"> Іграшки</label>
-            <label><input type="checkbox" name="subcategory" value="візочки"> Візочки</label>
-            <label><input type="checkbox" name="subcategory" value="автокрісла"> Автокрісла</label>
-          </fieldset>
-
-          <!-- Продукти харчування -->
-          <fieldset class="subcategory-group" data-parent="продукти" style="display:none;">
-            <legend>Підкатегорії (Продукти харчування)</legend>
-            <label><input type="checkbox" name="subcategory" value="бакалія"> Бакалія</label>
-            <label><input type="checkbox" name="subcategory" value="консерви"> Консерви</label>
-            <label><input type="checkbox" name="subcategory" value="солодощі"> Солодощі</label>
-            <label><input type="checkbox" name="subcategory" value="напої"> Напої</label>
-          </fieldset>
-
-          <!-- Спортивні товари -->
-          <fieldset class="subcategory-group" data-parent="спортивні-товари" style="display:none;">
-            <legend>Підкатегорії (Спортивні товари)</legend>
-            <label><input type="checkbox" name="subcategory" value="фітнес"> Фітнес</label>
-            <label><input type="checkbox" name="subcategory" value="тренажери"> Тренажери</label>
-            <label><input type="checkbox" name="subcategory" value="екіпірування"> Екіпірування</label>
-          </fieldset>
-
-          <!-- Інше -->
-          <fieldset class="subcategory-group" data-parent="інше" style="display:none;">
-            <legend>Підкатегорії (Інше)</legend>
-            <label><input type="checkbox" name="subcategory" value="автотовари"> Автотовари</label>
-            <label><input type="checkbox" name="subcategory" value="зоотовари"> Зоотовари</label>
-            <label><input type="checkbox" name="subcategory" value="книги"> Книги</label>
-            <label><input type="checkbox" name="subcategory" value="інструменти"> Інструменти</label>
-          </fieldset>
-
-          <!-- Вот блоки с городом, ценой и состоянием -->
-          <fieldset>
-            <legend>Місто</legend>
-            <select name="city">
-              <option value="">Усі міста</option>
-              <option value="ніцца">Ніцца</option>
-              <option value="канни">Канни</option>
-            </select>
-          </fieldset>
-
-          <fieldset>
-            <legend>Ціна</legend>
-            <label>Від: <input type="number" name="price_min" min="0" placeholder="0"></label>
-            <label>До: <input type="number" name="price_max" min="0" placeholder="1000"></label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Стан</legend>
-            <label><input type="radio" name="condition" value="new"> Нове</label>
-            <label><input type="radio" name="condition" value="used"> Б/у</label>
-            <label><input type="radio" name="condition" value="" checked> Всі</label>
-          </fieldset>
-
-          <!-- Кнопки -->
-          <div class="filter-buttons">
-            <button class="apply-filter" type="button">Застосувати</button>
-            <button class="reset-filter" type="button">Скинути</button>
-          </div>
-
+<!-- Кнопки застосування та скидання фільтрів -->
+<div class="filter-buttons">
+  <button class="apply-filter btn btn-primary" type="button">
+    <i class="fa-solid fa-check"></i> Застосувати
+  </button>
+  <button class="reset-filter btn" type="button">
+    <i class="fa-solid fa-xmark"></i> Скинути
+  </button>
+</div>
+   
         </div> <!-- конец filter-panel -->
 
       </div> <!-- конец filter-wrapper -->
@@ -274,52 +201,90 @@
 </section>
 
 
-<!-- Оверлей для добавления оголошення -->
-<div id="addAdOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<!-- Оверлей добавления объявления -->
+<div id="addAdOverlay" class="overlay hidden">
   <div class="overlay-content">
-    <button id="closeAddAd" class="close-btn" aria-label="Закрити форму">&times;</button>
-    <h2 id="modalTitle">Додати нове оголошення</h2>
-    <form id="addAdForm">
-      <label>
-        Назва товару:
-        <input type="text" name="title" required />
-      </label>
-      <label>
-        Опис:
-        <textarea name="description" required></textarea>
-      </label>
-      <label>
-        Ціна (€):
-        <input type="number" name="price" min="0" required />
-      </label>
-      <label>
-        Місто:
-        <select name="location" required>
-          <option value="Ніцца">Ніцца</option>
-          <option value="Канни">Канни</option>
-          <option value="Монако">Монако</option>
-          <!-- Добавь другие города при необходимости -->
+    <h2>Додати оголошення</h2>
+    <form id="addAdForm" class="ad-form">
+
+      <!-- Фото -->
+      <div class="form-group">
+        <label for="imageInput"><i class="fa-solid fa-image"></i> Фото товару</label>
+        <input type="file" id="imageInput" name="images" accept="image/*" multiple />
+        <div id="previewContainer" style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;"></div>
+      </div>
+
+      <!-- Назва -->
+      <div class="form-group">
+        <label for="title"><i class="fa-solid fa-pen"></i> Назва</label>
+        <input type="text" id="title" name="title" required placeholder="Наприклад: Зимова куртка" />
+      </div>
+
+      <!-- Опис -->
+      <div class="form-group">
+        <label for="description"><i class="fa-solid fa-align-left"></i> Опис</label>
+        <textarea id="description" name="description" rows="3" required placeholder="Опишіть товар..."></textarea>
+      </div>
+
+      <!-- Категорія -->
+      <div class="form-group">
+        <label for="category"><i class="fa-solid fa-layer-group"></i> Категорія</label>
+        <select id="category" name="category" required>
+          <option value="">Оберіть категорію</option>
+          <option value="одяг">Одяг</option>
+          <option value="техніка">Техніка</option>
+          <option value="меблі">Меблі</option>
+          <option value="побутова-хімія">Побутова хімія</option>
+          <option value="дитячі-товари">Дитячі товари</option>
+          <option value="продукти">Продукти</option>
+          <option value="спортивні-товари">Спортивні товари</option>
+          <option value="автотовари">Автотовари</option>
+          <option value="інше">Інше</option>
         </select>
-      </label>
-      <label>
-        Національність продавця:
-        <select name="nationality" required>
-          <option value="Українець">Українець</option>
-          <option value="Француз">Француз</option>
-          <option value="Поляк">Поляк</option>
-          <option value="Румун">Румун</option>
-          <option value="Українка">Українка</option>
-          <!-- Добавь другие варианты -->
+      </div>
+
+
+      <!-- Стан -->
+      <div class="form-group">
+        <label for="condition"><i class="fa-solid fa-box"></i> Стан</label>
+        <select id="condition" name="condition" required>
+          <option value="">Оберіть стан</option>
+          <option value="new">Нове</option>
+          <option value="used">Б/у</option>
         </select>
-      </label>
-      <label>
-      Фото:
-      <input type="file" name="image" accept="image/*" />
-      </label>
-      <button type="submit" class="primary-btn">Додати оголошення</button>
+      </div>
+
+      <!-- Ціна -->
+      <div class="form-group">
+        <label for="price"><i class="fa-solid fa-euro-sign"></i> Ціна</label>
+        <input type="number" id="price" name="price" min="0" step="1" placeholder="0 = безкоштовно" />
+      </div>
+
+      <!-- Місто -->
+      <div class="form-group">
+        <label for="location"><i class="fa-solid fa-location-dot"></i> Місто</label>
+        <select id="location" name="location" required>
+          <option value="">Оберіть місто</option>
+          <option value="ніцца">Ніцца</option>
+          <option value="канни">Канни</option>
+        </select>
+      </div>
+
+      <!-- Національність -->
+      <div class="form-group">
+        <label for="nationality"><i class="fa-solid fa-flag"></i> Національність</label>
+        <input type="text" id="nationality" name="nationality" placeholder="Наприклад: Українець" />
+      </div>
+
+      <!-- Кнопки -->
+      <div class="form-buttons">
+        <button type="submit" class="submit-btn"><i class="fa-solid fa-plus"></i> Додати</button>
+        <button type="button" id="closeAddAd" class="cancel-btn"><i class="fa-solid fa-xmark"></i> Скасувати</button>
+      </div>
     </form>
   </div>
 </div>
+
 
 
   <!-- 6. Відгуки -->

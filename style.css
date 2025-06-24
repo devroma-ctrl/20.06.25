@@ -1,4 +1,18 @@
-/* removed empty html, body rule set */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+/* Глобально включаем box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 
 /* Общие стили для страницы */
 body {
@@ -730,7 +744,7 @@ body.dark .faq {
   position: absolute;
   top: 100%;
   right: 0;
-  width: 320px;
+  width: 600px;
   background-color: var(--filter-panel-bg, #fff);
   border: 1px solid var(--filter-panel-border, #ccc);
   border-radius: 12px;
@@ -739,6 +753,8 @@ body.dark .faq {
   box-sizing: border-box;
   display: none;
   z-index: 1000;
+  max-height: 80vh; /* Чтобы не вываливался слишком вниз */
+overflow-y: auto; /* Добавим прокрутку, если фильтров много */
 }
 
 .filter-panel.show {
@@ -794,18 +810,25 @@ body.dark .faq {
   display: flex;
   justify-content: space-between; /* Кнопки по краям */
   margin-top: 16px;
-  padding: 0 8px;
-  box-sizing: border-box;
+  gap: 12px;
+  flex-wrap: wrap; /* чтобы кнопки переносились, если мало места */
   width: 100%;
 }
 .filter-buttons button {
-  padding: 8px 16px;
+  flex: 1 1 45%; /* кнопки занимают примерно по половине с отступом */
+  min-width: 120px; /* минимум ширина */
+  padding: 10px 16px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* расстояние между иконкой и текстом */
 }
+
 
 
 .apply-filter {
@@ -818,14 +841,16 @@ body.dark .faq {
   text-overflow: ellipsis;   /* если текст слишком длинный, покажет троеточие */
   box-sizing: border-box;
   font-weight: 600;
+  background-color: #3a94d6;
+  color: white;
 }
 
 .apply-filter:hover {
-  background-color: #3a94d6;
+  background-color: #2878b5;
 }
 
 .reset-filter {
-  background-color: #ccc;
+  background-color: #ccc0;
   color: #222;
 }
 .reset-filter:hover {
@@ -859,23 +884,26 @@ body.dark .faq {
 
 /* Панель фильтров — светлая тема */
 .top-bar[data-theme="light"] .filter-panel {
-  background-color: #fff;          /* белый фон */
-  border: 1px solid #ccc;          /* светлая чёткая рамка */
-  color: #222;                    /* тёмный текст */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* легкая тень для отделения */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #222; /* тёмный текст */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Внутри панели */
+.top-bar[data-theme="light"] .filter-panel label,
+.top-bar[data-theme="light"] .filter-panel legend {
+  color: #222;
+}
+
+.top-bar[data-theme="light"] .filter-panel input,
 .top-bar[data-theme="light"] .filter-panel select {
-  background-color: #f0f0f0;      /* чуть светлее, чтобы не сливалось */
-  color: #222;                   /* тёмный текст */
-  border: 1px solid #bbb;        /* чуть темнее рамка */
+  background-color: #f0f0f0;
+  color: #222;
+  border: 1px solid #bbb;
   border-radius: 6px;
   padding: 6px 10px;
-  width: 100%;
-  margin-top: 4px;
+  box-sizing: border-box;
 }
-
 
 /* Кнопка применить */
 .top-bar[data-theme="light"] .apply-filter {
@@ -909,9 +937,7 @@ body.dark .faq {
   box-shadow: 0 0 8px #4eb3ff;
 }
 
-
-
-/* Тёмная тема — кнопка фильтра */
+/* Тёмная тема */
 .top-bar[data-theme="dark"] {
   --filter-panel-bg: #2a2a2a;
   --filter-panel-border: #444;
@@ -921,6 +947,28 @@ body.dark .faq {
   --filter-select-text: #eee;
   --filter-apply-bg: #4eb3ff;
   --filter-apply-color: #fff;
+}
+
+.top-bar[data-theme="dark"] .filter-panel {
+  background-color: var(--filter-panel-bg);
+  border: 1px solid var(--filter-panel-border);
+  color: var(--filter-panel-text);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
+
+.top-bar[data-theme="dark"] .filter-panel label,
+.top-bar[data-theme="dark"] .filter-panel legend {
+  color: var(--filter-panel-text);
+}
+
+.top-bar[data-theme="dark"] .filter-panel input,
+.top-bar[data-theme="dark"] .filter-panel select {
+  background-color: var(--filter-select-bg);
+  color: var(--filter-select-text);
+  border: 1px solid var(--filter-select-border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  box-sizing: border-box;
 }
 
 .top-bar[data-theme="dark"] .filter-button {
@@ -937,6 +985,7 @@ body.dark .faq {
   box-shadow: 0 0 8px #4eb3ff;
 }
 
+
 /* Hero block */
 .hero {
   padding: 8px 16px;         /* Сильное уменьшение отступов */
@@ -950,8 +999,6 @@ body.dark .faq {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   position: relative;
   line-height: 1.2;
-  height: 140px;             /* ✅ Жёстко задаём меньшую высоту */
-  overflow: hidden;          /* ✅ Скрываем лишний контент, если он вдруг вылезет */
 }
 .compact-hero {
   padding: 12px 16px; /* Меньше верхний и нижний padding */
@@ -990,7 +1037,7 @@ body.dark .faq {
 .primary-btn {
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   color: white;
-  padding: 12px 24px;
+  padding: 12px 16px;
   font-size: 16px;
   font-weight: 600;
   border: none;
@@ -1002,6 +1049,8 @@ body.dark .faq {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-radius: 16px !important;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .primary-btn:hover {
@@ -1485,139 +1534,288 @@ input:checked + .slider:before {
 
 /* Стили для самой начинки(оголошення)" */
 .product-grid {
-  display: flex;           /* или grid */
+  display: flex;
   flex-wrap: wrap;
-  gap: 10px;               /* промежуток между карточками */
-  justify-content: flex-start; /* или space-between/space-around — смени на flex-start для плотного расположения */
+  gap: 14px;
+  justify-content: flex-start;
   width: 100%;
 }
 
 .product-card {
-  flex: 1 1 18%;           /* примерно 5 карточек в ряд (5 * 18% = 90%) */
-  min-width: 150px;        /* минимальная ширина */
-  max-width: 200px;        /* чтобы карточки не растягивались слишком */
-  box-sizing: border-box;
-  margin: 0;               /* убери внешние отступы если есть */
+  background-color: #fff;
+  color: #222;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  padding: 12px;
+  width: calc(20% - 14px); /* 5 карточек в ряд с учётом gap */
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
 }
 
-.product-image, .no-photo-placeholder {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  display: block;
+.product-card:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
+body.dark .product-card:hover {
+  background-color: #333;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+}
+
+body.dark .product-card {
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+.product-image-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 140px;
+  background-color: #f0f0f0;
+  color: #aaa;
+  border-radius: 6px;
+  font-size: 16px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.product-image-placeholder i {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
 
 .product-card img.product-image {
   width: 100%;
   height: 140px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-bottom: 8px;
 }
 
 .product-image.no-photo {
   filter: grayscale(1);
   opacity: 0.6;
-  object-fit: contain; /* чтобы текст на заглушке не обрезался */
+  object-fit: contain;
   background-color: #f0f0f0;
 }
-
-.product-info h4 {
-  margin: 8px 0 6px;
-  font-size: 18px;
-  color: #222;
+body.dark .product-image.no-photo {
+  background-color: #333;
 }
 
-.product-info p {
+/* Информация */
+.product-info h4,
+.product-title {
+  margin: 8px 0 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: inherit;
+  line-height: 1.2;
+}
+body.dark .product-title {
+  color: #f0f0f0;
+}
+
+.product-description {
   font-size: 14px;
   color: #555;
-  margin: 4px 0;
+}
+body.dark .product-description {
+  color: #ccc;
 }
 
 .product-price {
-  font-weight: 600;
+  font-weight: bold;
   color: #007BFF;
   margin-top: 6px;
+}
+body.dark .product-price {
+  color: #4da3ff;
 }
 
 .product-location {
   font-size: 12px;
-  color: #999;
-  margin-top: 4px;
+  color: #888;
+}
+body.dark .product-location {
+  color: #aaa;
 }
 
 
-/* Оверлей для добавления оголошення */
-/* Оверлей - затемнение фона и центрирование */
+/* ======= Overlay (выпадающая панель добавления оголошення) ======= */
+
 .overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.85);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 10px 20px; /* увеличил боковые отступы */
 }
 
-/* Скрытый по умолчанию */
-.hidden {
+.overlay.hidden {
   display: none;
 }
 
 .overlay-content {
   background: #fff;
-  padding: 20px 30px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  border-radius: 16px;
+  padding: 30px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
   position: relative;
+  animation: fadeInUp 0.3s ease;
+  margin: 0 auto; /* центрирование */
+  /* margin-right: 20px;  убрал */
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px; right: 15px;
-  background: none;
+.overlay-content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+}
+.ad-form {
+  padding-left: 12px;
+  padding-right: 12px;
+  /* уже есть у тебя: */
+  /* .form-group и label, input и textarea внутри */
+}
+
+
+.ad-form .form-group {
+  margin-bottom: 16px;
+}
+
+.ad-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.ad-form input,
+.ad-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.ad-form input:focus,
+.ad-form textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.ad-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-btn,
+.cancel-btn {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 14px;
   border: none;
-  font-size: 28px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn {
+  background-color: #007BFF;
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
   color: #333;
 }
 
-form label {
-  display: block;
-  margin-bottom: 12px;
+.cancel-btn:hover {
+  background-color: #c8c8c8;
 }
 
-form input[type="text"],
-form input[type="number"],
-form input[type="url"],
-form select,
-form textarea {
-  width: 100%;
-  padding: 6px 8px;
-  margin-top: 4px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.primary-btn {
-  display: inline-block;
-  padding: 10px 18px;
-  background-color: #0066cc;
+
+/* ======= Темная тема для оверлея ======= */
+body.dark .overlay-content {
+  background: #1e1e1e;
+  color: #f0f0f0;
+}
+
+body.dark .overlay-content h2 {
+  color: #f0f0f0;
+}
+
+body.dark .ad-form label {
+  color: #ccc;
+}
+
+body.dark .ad-form input,
+body.dark .ad-form textarea {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border-color: #444;
+}
+
+body.dark .ad-form input:focus,
+body.dark .ad-form textarea:focus {
+  border-color: #007BFF;
+}
+
+body.dark .submit-btn {
+  background-color: #007BFF;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
 }
 
-.primary-btn:hover {
-  background-color: #004999;
+body.dark .cancel-btn {
+  background-color: #444;
+  color: #ccc;
 }
+
+
 
 
 
