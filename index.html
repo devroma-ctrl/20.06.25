@@ -13,33 +13,37 @@
 
 
   <!-- Шапка сайта -->
-  <header class="site-header">
+<header class="site-header">
   <div class="header-container">
 
-    <div class="logo">
-      <a href="index.html">AzurMarket</a>
+    <!-- Новый логотип и название -->
+    <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+      <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+        <img src="images/azureence-logo.png" alt="Azureence Logo" style="height: 36px; width: auto;" />
+        <span style="font-size: 1.4rem; font-weight: 600; color: inherit; margin-left: 8px;">Azureence</span>
+      </a>
     </div>
 
     <nav class="nav-menu">
-      <a href="about.html">О нас</a>
+      <a href="#" id="aboutBtn">О нас</a>
       <a href="#contact">Контакти</a>
-      <a href="#faq">Товари</a>
       <a href="services.html">Послуги</a>
-      <!-- Кнопка Підтримати как ссылка с кнопочным стилем -->
+      <a href="#faq" id="faqBtn">FAQ</a>
       <button id="supportBtn" class="btn btn-support" style="display: flex; align-items: center;">
-  <svg xmlns="http://www.w3.org/2000/svg" 
-       width="20" height="20" 
-       viewBox="0 0 24 24" 
-       fill="currentColor" 
-       aria-hidden="true" 
-       style="display: inline-block; vertical-align: middle; margin-right: 8px;">
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
-             2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09 
-             C13.09 3.81 14.76 3 16.5 3 
-             19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-  </svg>
-  Підтримати
-</button>
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             width="20" height="20" 
+             viewBox="0 0 24 24" 
+             fill="currentColor" 
+             aria-hidden="true" 
+             style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                   2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09 
+                   C13.09 3.81 14.76 3 16.5 3 
+                   19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        Підтримати
+      </button>
+    </nav>
 
     <div class="header-controls">
       <div class="lang-dropdown">
@@ -53,23 +57,8 @@
         </div>
 
         <!-- Кнопка переключения языка -->
-<button id="langToggle">🌐 Мова ▼</button>
-
-<!-- Модальное окно выбора языка -->
-<div id="langModal" class="lang-modal hidden">
-  <div class="lang-modal-content">
-    <h3 class="lang-modal-header">Оберіть мову</h3>
-    <ul class="lang-list">
-      <li><span class="flag-icon flag-icon-ua"></span> Українська</li>
-    <li><span class="flag-icon flag-icon-ru"></span> Русский</li>
-    <li><span class="flag-icon flag-icon-uk"></span> English</li>
-    <li><span class="flag-icon flag-icon-fr"></span> Français</li>
-    <li><span class="flag-icon flag-icon-de"></span> Deutsch</li>
-      <!-- Добавь больше языков, если надо -->
-    </ul>
-    <button id="closeLangModal" class="close-btn">Закрити</button>
-  </div>
-</div>
+        <button id="langToggle">🌐 Мова ▼</button>
+      </div>
 
       <div class="auth-buttons">
         <button id="loginBtn" class="btn">Войти</button>
@@ -79,6 +68,81 @@
 
   </div>
 </header>
+
+<!-- Модальне вікно для "Про нас" -->
+<div id="aboutModal" class="modal hidden" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle">
+  <div class="modal-content">
+
+    <button class="close-btn" id="closeAbout" aria-label="Закрити вікно">&times;</button>
+
+    <div class="modal-top-logo"></div> <!-- логотип зверху -->
+
+    <div class="modal-inner">
+      <h2 id="aboutModalTitle">Про нас</h2>
+      <p>
+        Azureence — це проєкт, що народився з мого особистого досвіду та бажання допомогти людям, які опинилися далеко від рідного дому. Переїзд до нової країни — це завжди виклик: нові мови, культура, пошук потрібних товарів та послуг. Я створив Azureence, щоб зробити цей шлях простішим і доброзичливішим.
+      </p>
+      <p>
+        Це мультикультурний онлайн-маркетплейс, який об’єднує людей з різних країн та культур. Головна особливість — підтримка багатомовності: усі товари та послуги доступні твоєю рідною мовою, а національність продавця позначена, щоб легше знайти свою спільноту.
+      </p>
+      <p>
+        Я хочу, щоб кожен голос був почутий, а пошук необхідного став простим і зручним. Azureence — це місце, де люди можуть підтримувати одне одного та створювати справжню спільноту, незважаючи на відстані.
+      </p>
+      <p style="font-weight: 700; font-style: italic; color: #0088cc; margin-top: 1.5em;">
+        Your voice everywhere
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для "Підтримати" -->
+<div id="supportModal" class="modal hidden" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="supportModalTitle">
+  <div class="modal-content">
+    <button class="close-btn" id="closeSupport" aria-label="Закрыть окно">&times;</button>
+    <h2 id="supportModalTitle">Підтримайте нас</h2>
+    <p>Ваша підтримка допомагає нам розвивати платформу та робити її кращою для всіх користувачів.</p>
+
+    <!-- Кнопки -->
+    <div class="modal-buttons">
+      <a href="https://paypal.me/azureence?country.x=FR&locale.x=fr_FR" class="modal-btn" target="_blank" rel="noopener noreferrer">
+        ❤️ Підтримати через PayPal
+      </a>
+
+      <p class="modal-share-text" style="margin-top: 16px;"></p>
+        Або підтримайте нас через Buy Me a Coffee:
+      </p>
+
+      <a href="https://coff.ee/azureence" target="_blank" rel="noopener noreferrer" class="modal-btn alt">
+        ☕ Підтримати через Buy Me a Coffee
+      </a>
+
+      <p class="modal-share-text" style="margin-top: 16px;">
+        Або скопіюйте посилання нижче, щоб поділитися з друзями:
+      </p>
+
+      <button id="copyLinkBtn" class="modal-btn alt" type="button">📋 Скопіювати посилання</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Модальное окно выбора языка -->
+<div id="langModal" class="lang-modal hidden">
+  <div class="lang-modal-content">
+    <h3 class="lang-modal-header">Оберіть мову</h3>
+    <ul class="lang-list">
+      <li><span class="flag-icon flag-icon-ua"></span> Українська</li>
+      <li><span class="flag-icon flag-icon-ru"></span> Русский</li>
+      <li><span class="flag-icon flag-icon-uk"></span> English</li>
+      <li><span class="flag-icon flag-icon-fr"></span> Français</li>
+      <li><span class="flag-icon flag-icon-de"></span> Deutsch</li>
+      <!-- Добавь больше языков, если надо -->
+    </ul>
+    <button id="closeLangModal" class="close-btn">Закрити</button>
+  </div>
+</div>
+
 <!-- top-bar-wrapper (шапка + панель управления + кнопка фильтра) -->
   <section class="top-bar" data-theme="dark">
     <div class="controls">
@@ -180,25 +244,24 @@
       <i class="fa-solid fa-handshake" style="margin-right: 8px;"></i> Акція / Партнер
     </div>
   </div>
-
-  <!-- Затем фильтрационные баннеры -->
+  <!-- Затем баннеры для фильтров -->
   <div class="promo-row compact-row">
-    <a href="/marketplace.html?free=true" class="promo-banner free">
-      <i class="fa-solid fa-gift" style="margin-right: 8px;"></i> Безкоштовне
-    </a>
-    <a href="/marketplace.html?urgent=true" class="promo-banner urgent">
-      <i class="fa-solid fa-bolt" style="margin-right: 8px;"></i> Терміново
-    </a>
-  </div>
-</section>
+  <a href="#" class="promo-banner free" id="filter-free">
+    <i class="fa-solid fa-gift" style="margin-right: 8px;"></i> Безкоштовне
+  </a>
+  <a href="#" class="promo-banner urgent" id="filter-urgent">
+    <i class="fa-solid fa-bolt" style="margin-right: 8px;"></i> Терміново
+  </a>
+</div>
 
  <!-- 4. Оголошення -->
 <section class="ads">
-  <h3>Останні оголошення</h3>
+  <h3 id="productSectionTitle">Знайдено: 0 оголошень</h3>
   <div id="productList" class="product-grid">
-    <!-- Карточки товаров будут добавляться сюда через JS -->
+    <!-- Карточки товарів будуть додаватися сюди через JS -->
   </div>
 </section>
+
 
 
 <!-- Оверлей добавления объявления -->
@@ -275,6 +338,11 @@
         <label for="nationality"><i class="fa-solid fa-flag"></i> Національність</label>
         <input type="text" id="nationality" name="nationality" placeholder="Наприклад: Українець" />
       </div>
+      <!-- Срочно -->
+      <div class="form-group urgent-checkbox">
+        <input type="checkbox" id="urgent" name="urgent" />
+        <label for="urgent">🚨 Позначити як <strong>срочний продаж</strong></label>
+      </div>
 
       <!-- Кнопки -->
       <div class="form-buttons">
@@ -288,27 +356,77 @@
 
 
   <!-- 6. Відгуки -->
-  <section class="feedback">
-    <h3>Відгуки користувачів</h3>
-    <p>🚧 В розробці (в майбутньому — система перевірених користувачів)</p>
-  </section>
+<section class="feedback" id="feedback">
+  <h3>Відгуки користувачів</h3>
+  <p>🚧 В розробці (в майбутньому — система перевірених користувачів)</p>
+</section>
+
+<!-- 7. FAQ -->
+<section class="faq" id="faq">
+  <h3>FAQ — Часті запитання</h3>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      <span class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 1 1 4.91 2.28c-.43.36-.91.67-1.15 1.22-.19.44-.24.75-.24 1.5"></path>
+          <line x1="12" x2="12" y1="17" y2="17"></line>
+        </svg>
+      </span>
+      Як додати оголошення?
+      <span class="arrow">▼</span>
+    </button>
+    <div class="faq-answer">Натисніть кнопку "Додати оголошення", заповніть форму та підтвердіть.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      <span class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 1 1 4.91 2.28c-.43.36-.91.67-1.15 1.22-.19.44-.24.75-.24 1.5"></path>
+          <line x1="12" x2="12" y1="17" y2="17"></line>
+        </svg>
+      </span>
+      Чи потрібно реєструватися?
+      <span class="arrow">▼</span>
+    </button>
+    <div class="faq-answer">Ні, ви можете користуватися платформою без реєстрації, але реєстрація дає більше можливостей.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      <span class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 1 1 4.91 2.28c-.43.36-.91.67-1.15 1.22-.19.44-.24.75-.24 1.5"></path>
+          <line x1="12" x2="12" y1="17" y2="17"></line>
+        </svg>
+      </span>
+      Де шукати допомогу?
+      <span class="arrow">▼</span>
+    </button>
+    <div class="faq-answer">Скористайтеся розділом "Контакти" або зверніться в наш Telegram-чат.</div>
+  </div>
+</section>
 
 
-  <!-- 7. FAQ -->
-  <section class="faq">
-    <h3>Питання та відповіді</h3>
-    <ul>
-      <li>❓ Як додати оголошення?</li>
-      <li>❓ Чи потрібно реєструватися?</li>
-      <li>❓ Де шукати допомогу?</li>
-    </ul>
-  </section>
 
-  <!-- 8. Footer -->
-  <footer>
-    <p>© 2025 AzurMarket. Всі права захищені.</p>
-    <p><a href="#">Політика конфіденційності</a> | <a href="#">Правила платформи</a></p>
-  </footer>
+<!-- 8. Footer -->
+<footer id="contact">
+  <p>© 2025 AzurMarket. Всі права захищені.</p>
+  <p><a href="#">Політика конфіденційності</a> | <a href="#">Правила платформи</a></p>
+  <p>📞 Контакти: +33 123 456 789 | ✉️ info@azurmarket.com</p>
+</footer>
+
+<!-- Кнопка "Вверх" -->
+<button id="scrollToTopBtn" title="Вгору" aria-label="Прокрутити вгору">
+  ⬆️
+</button>
 
   <script src="script.js"></script>
 </body>

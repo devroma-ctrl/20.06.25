@@ -101,6 +101,46 @@ if (resetFilterBtn) {
   });
 }
 
+// === Рендер товаров ===
+function renderProducts(items) {
+  productList.innerHTML = '';
+
+  if (items.length === 0) {
+    productList.innerHTML = '<p class="no-products">Товарів не знайдено</p>';
+    return;
+  }
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+
+    // Если объявление срочное — добавляем класс и ярлык
+    if (item.urgent) {
+      card.classList.add('urgent');
+    }
+
+    const imageHtml = item.image
+      ? `<img src="${item.image}" alt="Фото товару" class="product-image"
+               onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Немає+фото';" />`
+      : `<div class="product-image-placeholder">
+           <i class="fa-solid fa-image"></i>
+           <span>Немає фото</span>
+         </div>`;
+
+    card.innerHTML = `
+      ${imageHtml}
+      <div class="product-info">
+        <h4 class="product-title">${item.title}${item.urgent ? ' <span class="urgent-label">Терміново</span>' : ''}</h4>
+        <p class="product-description">${item.description}</p>
+        <p class="product-price">${item.price > 0 ? '€' + item.price : 'Безкоштовно 🎁'}</p>
+        <span class="product-location">📍 ${item.location} • 🇺🇦 ${item.nationality}</span>
+      </div>
+    `;
+
+    productList.appendChild(card);
+  });
+}
+
 // === Основная функция фильтрации ===
 function applyFilters() {
   let filtered = products.slice();
@@ -155,120 +195,158 @@ function applyFilters() {
   }
 
   renderProducts(filtered);
+
+  // Обновление заголовка
+  const title = document.getElementById("productSectionTitle");
+  const count = filtered.length;
+
+  const getNoun = (n) => {
+    const lastDigit = n % 10;
+    const lastTwoDigits = n % 100;
+
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'оголошень';
+    if (lastDigit === 1) return 'оголошення';
+    if (lastDigit >= 2 && lastDigit <= 4) return 'оголошення';
+    return 'оголошень';
+  };
+
+  title.textContent = count > 0
+    ? `Знайдено: ${count} ${getNoun(count)}`
+    : '';  // Пустая строка, если товаров нет
 }
 
 
-  // === Рендер товаров ===
-  function renderProducts(items) {
-    productList.innerHTML = '';
+  // === Обработка открытия и закрытия оверлея с блокировкой прокрутки ===
+addAdBtn.addEventListener('click', () => {
+  addAdOverlay.classList.remove('hidden');
 
-    if (items.length === 0) {
-      productList.innerHTML = '<p>Товарів не знайдено</p>';
-      return;
-    }
+  // Блокируем прокрутку body фиксированием позиции и запоминанием скролла
+  const scrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.dataset.scrollY = scrollY; // сохраним значение для восстановления
+});
 
-    items.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-
-      const imageHtml = item.image
-        ? `<img src="${item.image}" alt="Фото товару" class="product-image"
-                 onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Немає+фото';" />`
-        : `<div class="product-image-placeholder">
-             <i class="fa-solid fa-image"></i>
-             <span>Немає фото</span>
-           </div>`;
-
-      card.innerHTML = `
-        ${imageHtml}
-        <div class="product-info">
-          <h4 class="product-title">${item.title}</h4>
-          <p class="product-description">${item.description}</p>
-          <p class="product-price">${item.price > 0 ? '€' + item.price : 'Безкоштовно 🎁'}</p>
-          <span class="product-location">📍 ${item.location} • 🇺🇦 ${item.nationality}</span>
-        </div>
-      `;
-
-      productList.appendChild(card);
-    });
+closeAddAdBtn.addEventListener('click', closeOverlay);
+addAdOverlay.addEventListener('click', (e) => {
+  if (e.target === addAdOverlay) {
+    closeOverlay();
   }
+});
 
-  // === Обработка формы добавления объявления ===
-  addAdBtn.addEventListener('click', () => {
-    addAdOverlay.classList.remove('hidden');
-  });
-
-  closeAddAdBtn.addEventListener('click', () => {
+function closeOverlay() {
   addAdOverlay.classList.add('hidden');
 
-  // Очищаем выбранные изображения
+  // Восстанавливаем прокрутку страницы
+  const scrollY = document.body.dataset.scrollY ? parseInt(document.body.dataset.scrollY) : 0;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  window.scrollTo(0, scrollY);
+
+  delete document.body.dataset.scrollY;
+
+  // Очистка
   selectedFiles = [];
   previewContainer.innerHTML = '';
   imageInput.value = '';
-});
+}
 
-  addAdOverlay.addEventListener('click', (e) => {
-  if (e.target === addAdOverlay) {
-    addAdOverlay.classList.add('hidden');
+// Блокируем "пробой" скролла внутри оверлея
+const overlayContent = addAdOverlay.querySelector('.overlay-content');
 
-    // Сброс фото при закрытии по фону
-    selectedFiles = [];
-    previewContainer.innerHTML = '';
-    imageInput.value = '';
-  }
-});
+overlayContent.addEventListener('wheel', function(e) {
+  const delta = e.deltaY;
+  const scrollTop = this.scrollTop;
+  const scrollHeight = this.scrollHeight;
+  const offsetHeight = this.offsetHeight;
 
-  imageInput.addEventListener('change', () => {
-    const newFiles = Array.from(imageInput.files);
-    selectedFiles = selectedFiles.concat(newFiles);
-    updatePreviews();
-    imageInput.value = '';
-  });
-
-  addAdForm.addEventListener('submit', (e) => {
+  if (
+    (delta > 0 && scrollTop + offsetHeight >= scrollHeight) || // скроллим вниз и достигнут низ
+    (delta < 0 && scrollTop <= 0)                              // скроллим вверх и достигнут верх
+  ) {
     e.preventDefault();
+  }
+}, { passive: false });
 
-    const formData = new FormData(addAdForm);
+overlayContent.addEventListener('touchmove', function(e) {
+  const scrollTop = this.scrollTop;
+  const scrollHeight = this.scrollHeight;
+  const offsetHeight = this.offsetHeight;
+  const touch = e.touches[0];
+  const currentY = touch.clientY;
 
-    const newProduct = {
-      title: formData.get('title') || '(без назви)',
-      description: formData.get('description') || '',
-      price: Number(formData.get('price')) || 0,
-      location: formData.get('location') || '',
-      nationality: formData.get('nationality') || '',
-      category: formData.get('category') || '',
-      // Убираем подкатегории, оставляем только category
-      condition: formData.get('condition') || '',
-      image: null
-    };
+  // Для touch-событий нужно отслеживать направление и предотвращать пробой
+  // Тут можно сделать проще - всегда preventDefault, если в крайних позициях, чтобы фон не скроллился
 
-    if (selectedFiles.length > 0) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        newProduct.image = event.target.result;
+  if (
+    (scrollTop === 0 && e.targetTouches[0].clientY > currentY) || 
+    (scrollTop + offsetHeight >= scrollHeight && e.targetTouches[0].clientY < currentY)
+  ) {
+    e.preventDefault();
+  }
+}, { passive: false });
 
-        products.push(newProduct);
-        console.log("✅ Добавлен товар:", newProduct);
-        console.log("📦 Все товары:", products);
-        applyFilters();
+imageInput.addEventListener('change', () => {
+  const newFiles = Array.from(imageInput.files);
+  selectedFiles = selectedFiles.concat(newFiles);
+  updatePreviews();
+  imageInput.value = '';
+});
 
-        selectedFiles.forEach(file => URL.revokeObjectURL(file));
-        selectedFiles = [];
+addAdForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-        addAdForm.reset();
-        previewContainer.innerHTML = '';
-        addAdOverlay.classList.add('hidden');
-      };
-      reader.readAsDataURL(selectedFiles[0]);
-    } else {
+  const formData = new FormData(addAdForm);
+
+  const newProduct = {
+    title: formData.get('title') || '(без назви)',
+    description: formData.get('description') || '',
+    price: Number(formData.get('price')) || 0,
+    location: formData.get('location') || '',
+    nationality: formData.get('nationality') || '',
+    category: formData.get('category') || '',
+    condition: formData.get('condition') || '',
+    urgent: formData.get('urgent') === 'on',
+    image: null
+  };
+
+  if (selectedFiles.length > 0) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      newProduct.image = event.target.result;
+
       products.push(newProduct);
+      console.log("✅ Добавлен товар:", newProduct);
+      console.log("📦 Все товары:", products);
       applyFilters();
+
+      selectedFiles.forEach(file => URL.revokeObjectURL(file));
+      selectedFiles = [];
 
       addAdForm.reset();
       previewContainer.innerHTML = '';
       addAdOverlay.classList.add('hidden');
-    }
-  });
+
+      closeOverlay(); // Восстановим прокрутку страницы при закрытии
+    };
+    reader.readAsDataURL(selectedFiles[0]);
+  } else {
+    products.push(newProduct);
+    applyFilters();
+
+    addAdForm.reset();
+    previewContainer.innerHTML = '';
+    addAdOverlay.classList.add('hidden');
+
+    closeOverlay(); // Восстановим прокрутку страницы при закрытии
+  }
+});
+
+
 
   // === Превью фото ===
   function updatePreviews() {
@@ -293,17 +371,179 @@ function applyFilters() {
   applyFilters();
 });
 
+// === Скрипт для модалки в шапке ===
+document.addEventListener('DOMContentLoaded', () => {
+  const aboutBtn = document.getElementById('aboutBtn');
+  const supportBtn = document.getElementById('supportBtn');
+  const aboutModal = document.getElementById('aboutModal');
+  const supportModal = document.getElementById('supportModal');
+  const closeAbout = document.getElementById('closeAbout');
+  const closeSupport = document.getElementById('closeSupport');
+
+  aboutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    aboutModal.classList.remove('hidden');
+  });
+
+  supportBtn.addEventListener('click', () => {
+    supportModal.classList.remove('hidden');
+  });
+
+  closeAbout.addEventListener('click', () => {
+    aboutModal.classList.add('hidden');
+  });
+
+  closeSupport.addEventListener('click', () => {
+    supportModal.classList.add('hidden');
+  });
+
+  // Закрыть по клику вне содержимого модалки
+  aboutModal.addEventListener('click', e => {
+    if (e.target === aboutModal) {
+      aboutModal.classList.add('hidden');
+    }
+  });
+
+  supportModal.addEventListener('click', e => {
+    if (e.target === supportModal) {
+      supportModal.classList.add('hidden');
+    }
+  });
+});
 
 
+// Скрипт для аккордеона FAQ
+document.querySelectorAll('.faq-question').forEach(button => {
+  button.addEventListener('click', () => {
+    const faqItem = button.closest('.faq-item');
+    const isOpen = faqItem.classList.contains('open');
 
+    // Обновляем aria-expanded для доступности
+    button.setAttribute('aria-expanded', String(!isOpen));
 
+    // Переключаем класс и отображение ответа
+    faqItem.classList.toggle('open');
+  });
+});
 
+// Плавный скролл для всех якорных ссылок с #
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetID = this.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetID);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
 
+// Скрипт поддержки проекта
+document.getElementById('copyLinkBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('Посилання скопійовано! Поділіться ним з друзями.');
+  }).catch(() => {
+    alert('Не вдалося скопіювати посилання. Спробуйте ще раз.');
+  });
+});
 
+// Скрипт для кнопки скопировать ссылку
+const copyBtn = document.getElementById('copyLinkBtn');
+const copyMessage = document.createElement('div');
+copyMessage.id = 'copyMessage';
+copyMessage.className = 'copy-message hidden';
+copyBtn.parentNode.appendChild(copyMessage);
 
+copyBtn.addEventListener('click', () => {
+  const link = "https://paypal.me/azureence?country.x=FR&locale.x=fr_FR";
+  navigator.clipboard.writeText(link).then(() => {
+    copyMessage.textContent = 'Посилання скопійовано!';
+    copyMessage.classList.remove('hidden');
+    copyMessage.classList.add('visible');
 
+    setTimeout(() => {
+      copyMessage.classList.remove('visible');
+      copyMessage.classList.add('hidden');
+    }, 2500);
+  }).catch(() => {
+    copyMessage.textContent = 'Не вдалося скопіювати посилання';
+    copyMessage.classList.remove('hidden');
+    copyMessage.classList.add('visible');
+  });
+});
+// Скрипт для кнопки "Вверх"
+// Показ кнопки при прокрутке вниз
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollBtn = document.getElementById('scrollToTopBtn');
 
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollBtn.style.display = 'block';
+    } else {
+      scrollBtn.style.display = 'none';
+    }
+  });
 
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
+// Скрипт для быстрого фильтра по типу товара
+document.addEventListener('DOMContentLoaded', () => {
+  const filterFreeBtn = document.getElementById('filter-free');
+  const filterUrgentBtn = document.getElementById('filter-urgent');
+
+  let activeQuickFilter = null;
+
+  function applyQuickFilter(type) {
+    if (activeQuickFilter === type) {
+      // Сброс фильтра, показываем все
+      activeQuickFilter = null;
+      applyFilters(); // твоя обычная фильтрация, показывает все
+      return;
+    }
+
+    activeQuickFilter = type;
+
+    let filtered = [];
+
+    if (type === 'free') {
+      filtered = products.filter(product => product.price === 0);
+    } else if (type === 'urgent') {
+      filtered = products.filter(product => product.urgent === true);
+    }
+
+    renderProducts(filtered);
+
+    // Обновляем заголовок
+    const title = document.getElementById("productSectionTitle");
+    const count = filtered.length;
+
+    const getNoun = (n) => {
+      const lastDigit = n % 10;
+      const lastTwoDigits = n % 100;
+      if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'оголошень';
+      if (lastDigit === 1) return 'оголошення';
+      if (lastDigit >= 2 && lastDigit <= 4) return 'оголошення';
+      return 'оголошень';
+    };
+
+    title.textContent = `Знайдено: ${count} ${getNoun(count)}`;
+  }
+
+  filterFreeBtn.addEventListener('click', e => {
+    e.preventDefault();
+    applyQuickFilter('free');
+  });
+
+  filterUrgentBtn.addEventListener('click', e => {
+    e.preventDefault();
+    applyQuickFilter('urgent');
+  });
+});
 
 
 
